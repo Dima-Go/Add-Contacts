@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 app = Flask(__name__)
 
 rownumber = 1
@@ -56,19 +56,18 @@ def addContact():
 def contacts():
     return render_template ("Contacts.html", contacts=contacts_list)
 
+def findByNumber(number):
+	for contact in contacts_list:
+		if contact['number'] == number:
+			return contact
+	return None
 
-
-
-# @app.route("/welcome")
-# def welcome(): 
-#     return ("<h1>Hello World!</h1>")
-
-
-# @app.route('/showFavorityFlower')
-# def flower():
-
-#     return render_template ("flower.html", flower=rose )
-
+@app.route('/deleteContact/<int:number>')
+def deleteContact(number):
+    contact = findByNumber(number)
+    if contact:
+        contacts_list.remove(contact)
+    return redirect('/contacts')
 
 if __name__ == "__main__": 
     app.run(port=5000, debug=True)
