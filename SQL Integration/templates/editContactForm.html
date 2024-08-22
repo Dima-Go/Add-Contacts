@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %} Edit Contact {% endblock %}
+
+{% block content %}
+
+<h1>Edit Contact Form</h1>
+
+<form action="/saveUpdatedContact/{{contact.number}}" method="POST" enctype="multipart/form-data">
+    <!-- name -->
+    <div>
+        <label for="name" id="name">Edit name:</label><br>
+        <input type="text" name="name" id="nametext" value="{{contact.name}}" required>
+    </div>
+    <br>
+    <!-- email -->
+    <div>
+        <label for="email" id="email">Edit email:</label><br>
+        <input type="email" name="email" id="email" value="{{contact.email}}" required>
+    </div>
+    <br>
+    <!-- phone -->
+    <div>
+        <label for="phone" id="phone">Edit phone:</label><br>
+        <input type="tel" name="phone" id="phone" value="{{contact.phone}}" required>
+    </div>
+    <br>
+    <!-- gender -->
+     <div>
+        <label for="gender">Edit Gender</label><br>
+        <select name="gender" id="gender">
+            <option value="Male" {% if contact.gender == 'Male' %}selected{% endif %}>Male</option>
+            <option value="Female" {% if contact.gender == 'Female' %}selected{% endif %}>Female</option>
+            <option value="Other" {% if contact.gender == 'Other' %}selected{% endif %}>Other</option>
+        </select>
+    </div>
+    <br>   
+     <!-- submit -->
+    <input id="addto" type="submit" value="Save Changes">
+ </form>
+ 
+ <script src="/static/js/contacts.js"></script>
+
+{% endblock %}
