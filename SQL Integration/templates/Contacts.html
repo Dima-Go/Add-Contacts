@@ -24,7 +24,9 @@
             <td>{{ contact.phone }}</td>
             <td>{{ contact.email }}</td>
             <td id="actions">
-                <button id="edit">Edit</button>
+                <a href="/editContact/{{contact.number}}">
+                    <button id="edit">Edit</button>
+                </a>
                 <br><br>
                 <a href="/deleteContact/{{contact.number}}">
                     <button id="delete" onclick="deleteRow(this)">Delete</button>
