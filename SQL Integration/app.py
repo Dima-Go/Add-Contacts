@@ -4,7 +4,7 @@ import os
 import uuid
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'static/images'
+app.config['UPLOAD_FOLDER'] = 'static/images/'
 
 @app.route('/form')
 def form():
@@ -56,20 +56,26 @@ def search_contacts(search_name):
     result = cursor.fetchall()
     return result
 
-def create_contact(name, phone, email, gender):
+def create_contact(name, phone, email, gender, photo):
     db, cursor = get_db()
     cursor.execute(
-        "INSERT INTO contacts (name, phone, email, gender) VALUES (%s, %s, %s, %s)",
-        (name, phone, email, gender)
-    )
+        "INSERT INTO contacts (name, phone, email, gender, photo) VALUES (%s, %s, %s, %s, %s)",
+        (name, phone, email, gender, photo))
     db.commit()
-    return "Contact was added successfully"
+    return f"Contact {name} was added successfully"
 
 def delete_contact(number):
     db, cursor = get_db()
     cursor.execute("DELETE FROM contacts WHERE number = %s", (number,))
     db.commit()
-    return "Contact was deleted successfully"
+    return f"Contact {number} deleted successfully"
+
+def update_contact(number, name, phone, email, gender):
+   db, cursor = get_db()
+   cursor.execute(
+       "UPDATE contacts SET name = %s, phone = %s, email = %s, gender = %s WHERE number = %s",
+       (name, phone, email, gender, number))
+   db.commit()
 
 @app.route('/contacts')
 def viewContacts():
@@ -81,22 +87,23 @@ def createContact():
     email = request.form['email']
     phone = request.form['phone']
     gender = request.form['gender']
-    # photo = request.files['photo']
+    photo = request.files['photo']
     
-    # if 'photo' in request.files:
-    #     photo = request.files['photo']
-    #     if photo and photo.filename != '':
-    #         file_path = os.path.join('Assignment/static/images', fullname + '.jpg')
-    #         photo.save(file_path)
-    #         photo_url = f'/static/images/{fullname}.jpg'
-    #     else:
-    #         photo_url = None
-    # else:
-    #     photo_url = None
+    if 'photo' in request.files:
+        photo = request.files['photo']
+        if photo and photo.filename != '':
+            photo_filename = str(uuid.uuid4()) + os.path.splitext(photo.filename)[1]
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], fullname + '.jpg')
+            # photo.save(file_path)
+            photo_url = f'/static/images/{fullname}.jpg'
+        else:
+            photo_url = None
+    else:
+        photo_url = None
 
     if not contact_exists(fullname, email):
         if not contact_exists(fullname, email):
-            create_contact(fullname, phone, email, gender)
+            create_contact(fullname, phone, email, gender, f"{fullname}.jpg")
         return redirect('/contacts')
     else:
         return render_template('Contacts.html', message='Contact already exists')
@@ -106,6 +113,20 @@ def createContact():
 @app.route('/deleteContact/<int:number>')
 def deleteContact(number):
    delete_contact(number)
+   return redirect('/contacts')
+
+@app.route('/editContact/<int:number>')
+def editContact(number):
+   contact = findByNumber(number)
+   return render_template('editContactForm.html', contact=contact)
+
+@app.route('/saveUpdatedContact/<int:number>', methods=['POST'])
+def saveUpdatedContact(number):
+   fullname = request.form['name']
+   phone = request.form['phone']
+   email = request.form['email']
+   gender = request.form['gender']
+   update_contact(number, fullname, phone, email, gender)
    return redirect('/contacts')
 
 @app.route('/search', methods=['POST'])
