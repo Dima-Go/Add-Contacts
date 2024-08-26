@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, g
 import mysql.connector
 import os 
 import uuid
+from dotenv import load_dotenv
+load_dotenv()
+
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'static/images/'
@@ -15,14 +18,39 @@ def form():
 def get_db():
     if 'db' not in g:
         g.db = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="admin",
-            port="3306",
-            database="contacts_app2"
+            host=os.getenv("DB_HOST", "localhost"),
+            user=os.getenv("DB_USER", "root"),
+            password=os.getenv("DB_PASSWORD", "admin"),
+            database=os.getenv("DB_NAME"),
+            port = os.getenv("DB_PORT")
         )
         g.cursor = g.db.cursor(dictionary=True)
+        create_db()
+        create_contacts_table()
     return g.db, g.cursor
+
+# Create DB in case it does not exists
+def create_db():
+    db, cursor = get_db()
+    db_name = os.getenv('DB_NAME', 'contacts_app2')
+    cursor.execute(f"CREATE DATABASE IF NOT EXISTS {db_name}")
+    cursor.execute(f"USE {db_name}")
+    db.commit()
+    print(f"Database {db_name} created successfully")
+    
+# Create table in case it does not exists
+def create_contacts_table():
+    db, cursor = get_db()
+    cursor.execute(
+        "CREATE TABLE IF NOT EXISTS contacts ("
+        "number INT AUTO_INCREMENT PRIMARY KEY,"
+        "name VARCHAR(255) NOT NULL,"
+        "phone VARCHAR(255),"
+        "email VARCHAR(255) NOT NULL,"
+        "gender VARCHAR(10),"
+        "photo VARCHAR(255))")
+    db.commit()
+    print("Table created successfully")
 
 def teardown_db(exception):
     db = g.pop('db', None)
