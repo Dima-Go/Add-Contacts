@@ -1,0 +1,249 @@
+body{
+    background-color: rgb(237, 236, 235);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+th, td{
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid;
+    align-content: center;
+}
+
+tr{
+    box-sizing: border-box;
+}
+table{
+    border: 1px solid;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    border: 1px solid;
+}
+
+.h1 {
+    margin-left: 260px;
+}
+
+#actions {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+}
+
+#edit{
+    width: 50px;
+    height: 28px;
+    background-color: rgb(26, 125, 250);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 3px;   
+}
+
+#edit:hover {
+    background-color: rgb(240, 191, 66);
+    cursor: pointer;
+    color: rgb(171, 26, 194);
+}
+
+#edit:active {
+   border: 1px solid rgb(40, 74, 226);
+   box-shadow: 0px 0px 0px 3px rgb(186, 246, 246), inset 0 0 0 2px white;
+   background-color: rgb(216, 168, 44);
+   cursor: pointer;
+}
+
+#delete{
+    width: 70px;
+    height: 28px;
+    background-color: rgb(26, 125, 250);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 3px;   
+}
+
+#delete:hover {
+    background-color: rgb(240, 191, 66);
+    cursor: pointer;
+    color: rgb(171, 26, 194);
+}
+
+#delete:active {
+   border: 1px solid rgb(40, 74, 226);
+   box-shadow: 0px 0px 0px 3px rgb(186, 246, 246), inset 0 0 0 2px white;
+   background-color: rgb(216, 168, 44);
+   cursor: pointer;
+}
+
+#addnew{
+    width: 135px;
+    height: 28px;
+    background-color: rgb(26, 125, 250);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 3px;  
+    position: relative;
+    transform: translate(195%, -35%); 
+}
+
+#addnew:hover {
+    background-color: rgb(240, 191, 66);
+    cursor: pointer;
+    color: rgb(171, 26, 194);
+}
+
+#addnew:active {
+   border: 1px solid rgb(40, 74, 226);
+   box-shadow: 0px 0px 0px 3px rgb(186, 246, 246), inset 0 0 0 2px white;
+   background-color: rgb(216, 168, 44);
+   cursor: pointer;
+}
+
+#addto{
+    width: 270px;
+    height: 28px;
+    background-color: rgb(26, 125, 250);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 3px;   
+}
+
+#addto:hover {
+    background-color: rgb(240, 191, 66);
+    cursor: pointer;
+    color: rgb(171, 26, 194);
+}
+
+#addto:active {
+   border: 1px solid rgb(40, 74, 226);
+   box-shadow: 0px 0px 0px 3px rgb(186, 246, 246), inset 0 0 0 2px white;
+   background-color: rgb(216, 168, 44);
+   cursor: pointer;
+}
+
+.topnav {
+    display: flex;
+    background-color: rgb(46, 62, 79);
+    border: none;
+    overflow: hidden;
+    justify-content: space-between;
+    text-align: left;
+    color: white;
+    padding: 7px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;    
+}
+
+.topnav-left {
+    display: flex;
+    align-items: center;
+}
+
+.topnav-right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.navbar input {
+    padding: 6px;
+    border-radius: 4px;
+}
+
+.topnav a{
+    color: white;
+    text-align: center;
+    padding: 0px 0px 5px 5px; 
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    margin-top: 0px;
+    margin-right: 10px;
+}
+
+.topnav a:hover{
+    cursor: pointer;
+    color: rgb(144, 194, 255);
+}
+
+.topnav a:active{
+    cursor: pointer;
+    color: rgb(26, 126, 250);
+}
+
+.topnav input{
+    padding: 6px 5px 7px 8px;
+    margin-left: 24px;
+    border: none;
+    border-radius: 3px;
+}
+
+.topnav input:hover{
+    cursor: pointer;
+    background-color: rgb(214, 242, 250);
+    border: none;
+}
+
+.topnav input:active{
+    border: none;
+    cursor: cell;
+} 
+
+.topnav button{
+    height: 30px;
+    width: 65px;
+    background-color: rgb(150, 165, 165);
+    border: none;
+    border-radius: 3px;
+    text-align: center;
+    vertical-align: middle;
+    color: white;
+    margin-left: -1px;
+    margin-top: 0.5px;
+}
+
+.topnav button:hover{
+    cursor: pointer;
+    background-color: rgb(26, 126, 250);
+}
+
+.topnav button:active{
+    cursor: pointer;
+    background-color: rgb(144, 194, 255);
+}
+
+#gender{
+    width: 270px;
+}
+
+#nametext, #email, #phone {
+    width: 300px;
+}
+
+label.bold{
+    font-weight: bold;
+}
+
+input.greentext{
+    color: green;
+}
+
+tr.hovered {
+    background-color: white;
+    border: 1.4px black solid;
+}
+
+.image-form {
+    display: none;
+}
+
+img {
+    cursor: pointer;
+    align-content: center;
+    display: block;
+    margin: 0 auto;
+}

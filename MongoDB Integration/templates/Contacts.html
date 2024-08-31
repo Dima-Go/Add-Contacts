@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %} Contacts Table {% endblock %}
+
+{% block content %}
+
+<h1 class="h1">Contacts</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Number</th> 
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Actions</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in contacts %}
+        <tr>
+            <td>{{ contact.number if contact.number else contact._id }}</td>
+            <td>{{ contact.name }}</td>
+            <td>{{ contact.phone }}</td>
+            <td>{{ contact.email }}</td>
+            <td id="actions">
+                <a href="/editContact/{{contact.number if contact.number else contact._id}}">
+                    <button id="edit">Edit</button>
+                </a>
+                <br><br>
+                <a href="/deleteContact/{{contact.number if contact.number else contact._id}}">
+                    <button id="delete" onclick="deleteRow(this)">Delete</button>
+                </a> 
+            </td>
+            <td>
+                {% if contact.photo %}
+                <img src="{{ contact.photo }}" height="80" alt="">
+                <form id="form-{{ contact.number if contact.number else contact._id }}" class="image-form" onsubmit="event.preventDefault(); submitImageForm({{ contact.number if contact.number else contact._id }});">
+                    <input type="url" id="url-{{ contact.number if contact.number else contact._id }}" placeholder="Enter image URL">
+                    <button type="submit">Submit</button>
+                </form>
+                {% else %}
+                    <button id="button-{{ contact.number if contact.number else contact._id }}" onclick="showImageForm({{ contact.number if contact.number else contact._id }})">Add Image</button>
+                    <form id="form-{{ contact.number if contact.number else contact._id }}" class="image-form" onsubmit="event.preventDefault(); submitImageForm({{ contact.number if contact.number else contact._id }});">
+                        <input type="url" id="url-{{ contact.number if contact.number else contact._id }}" placeholder="Enter image URL">
+                        <button type="submit">Submit</button>
+                    </form>
+                    <img id="image-{{ contact.number if contact.number else contact._id }}" src="" style="display:none; width: auto; height: 80px" onclick="enableImageEdit({{ contact.number if contact.number else contact._id }});">
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br>
+<div>
+<a href="/form">
+    <button id="addnew">Add New Contact</button>
+</a>
+</div>
+
+<script src="/static/js/contacts.js"></script>
+
+{% endblock %}
